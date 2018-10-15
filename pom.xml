@@ -7,6 +7,9 @@
     <groupId>com.jiangwg</groupId>
     <artifactId>hodgepodge</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>db</module>
+    </modules>
     <packaging>pom</packaging>
 
     <profiles>
