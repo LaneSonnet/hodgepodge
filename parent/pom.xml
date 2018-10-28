@@ -12,9 +12,11 @@
         <!-- activemq -->
         <activemq-version>5.13.2</activemq-version>
         <!-- apache camel -->
-        <camel.version>2.16.2</camel.version>
+        <camel.version>2.18.1</camel.version>
         <!-- spring -->
         <xbean-spring-version>4.5</xbean-spring-version>
+        <!-- mysql -->
+        <mysql-connection-version>5.1.9</mysql-connection-version>
         <!-- plugin version -->
         <maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
         <maven.resources.plugin.version>2.4.3</maven.resources.plugin.version>
@@ -69,6 +71,11 @@
                 <groupId>org.apache.xbean</groupId>
                 <artifactId>xbean-spring</artifactId>
                 <version>${xbean-spring-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connection-version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -142,12 +149,12 @@
         <repository>
             <id>nexus-releases</id>
             <name>ots repository:nexus-releases</name>
-            <url>http://127.0.0.1:8080/nexus/content/repositories/thirdparty</url>
+            <url>http://127.0.0.1:8081/nexus/content/repositories/thirdparty</url>
         </repository>
         <snapshotRepository>
             <id>nexus-snapshots</id>
             <name>ots snapshots repository:nexus-snapshots</name>
-            <url>http://127.0.0.1:8080/nexus/content/repositories/snapshots</url>
+            <url>http://127.0.0.1:8081/nexus/content/repositories/snapshots</url>
             <uniqueVersion>true</uniqueVersion>
         </snapshotRepository>
     </distributionManagement>

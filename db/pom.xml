@@ -12,15 +12,52 @@
     <artifactId>db</artifactId>
 
     <properties>
-        <flyway.version>5.0.3</flyway.version>
+        <db.script.directory>./src/main/resources/sql/</db.script.directory>
+        <dbchangefile.name>aaachange_file</dbchangefile.name>
+        <db.url>jdbc:mysql://localhost:3306/hodgepodge</db.url>
+        <db.usr>root</db.usr>
+        <db.pwd>root</db.pwd>
+        <!--<flyway.version>5.0.3</flyway.version>-->
     </properties>
 
     <dependencies>
-        <dependency>
+<!--        <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
             <version>${flyway.version}</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.dbdeploy</groupId>
+                <artifactId>maven-dbdeploy-plugin</artifactId>
+                <version>3.0M3</version>
 
+                <configuration>
+                    <scriptdirectory>${db.script.directory}</scriptdirectory>
+                    <name>${dbchangefile.name}</name>
+                    <encoding>UTF-8</encoding>
+                    <lineEnding>lf</lineEnding>
+                    <outputfile>./target/sql/apply.sql</outputfile>
+                    <undoOutputfile>./target/sql/undo.sql</undoOutputfile>
+                    <driver>com.mysql.jdbc.Driver</driver>
+                    <url>${db.url}</url>
+                    <userid>${db.usr}</userid>
+                    <password>${db.pwd}</password>
+                    <dbms>hodgepodge</dbms>
+                    <delimiter>/</delimiter>
+                    <delimiterType>row</delimiterType>
+                </configuration>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>5.1.9</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
 </project>
