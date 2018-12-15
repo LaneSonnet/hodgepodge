@@ -1,0 +1,136 @@
+Name: maven-dbdeploy-plugin
+Description: maven plugin to invoke dbdeploy
+Group Id: com.dbdeploy
+Artifact Id: maven-dbdeploy-plugin
+Version: 3.0M3
+Goal Prefix: dbdeploy
+
+This plugin has 3 goals:
+
+dbdeploy:change-script
+  Description: Maven goal for creating a new timestamped dbdeploy change
+    script.
+  Implementation: com.dbdeploy.mojo.CreateChangeScriptMojo
+  Language: java
+
+  Available parameters:
+
+    name (Default: new_change_script)
+      Name suffix for the file that will be created (e.g.
+      add_email_to_user_table).
+
+    scriptdirectory (Default: ${project.src.directory}/main/sql)
+      Directory where change scripts reside.
+
+dbdeploy:db-scripts
+  Description: Maven goal for creating the apply and undo scripts.
+  Implementation: com.dbdeploy.mojo.CreateDatabaseScriptsMojo
+  Language: java
+
+  Available parameters:
+
+    changeLogTableName
+      The name of the changelog table to use. Useful if you need to separate
+      DDL and DML when deploying to replicated environments. If not supplied
+      defaults to 'changelog'
+
+    dbms
+      String representing our DBMS (e.g. mysql, ora)
+
+    delimiter
+      Delimiter to use to separate scripts into statements, if dbdeploy will
+      apply the scripts for you i.e. you haven't specified outputfile. Default
+      ;
+
+    delimiterType
+      Either normal: split on delimiter wherever it occurs or row only split on
+      delimiter if it features on a line by itself. Default normal.
+
+    driver
+      Specifies the jdbc driver.
+
+    encoding (Default: ${project.build.sourceEncoding})
+      Encoding to use for change scripts and output files.
+
+    lastChangeToApply
+      The highest numbered delta script to apply.
+
+    lineEnding
+      Line ending to separate indiviual statement lines when applying directly
+      to the database. Can be platform (the default line ending for the current
+      platform), cr, crlf or lf. Default platform.
+
+    outputfile
+      The name of the script that dbdeploy will output. Include a full or
+      relative path.
+
+    password
+      The password of the dbms user who has permissions to select from the
+      schema version table.
+
+    scriptdirectory (Default: ${project.src.directory}/main/sql)
+      Full or relative path to the directory containing the delta scripts.
+
+    templateDirectory
+      Directory for your template scripts, if not using built-in
+
+    undoOutputfile
+      The name of the undo script that dbdeploy will output. Include a full or
+      relative path.
+
+    url
+      Specifies the url of the database that the deltas are to be applied to.
+
+    userid
+      The ID of a dbms user who has permissions to select from the schema
+      version table.
+
+dbdeploy:update
+  Description: Maven goal for applying dbdeploy change scripts directly to
+    the database.
+  Implementation: com.dbdeploy.mojo.UpdateDatabaseMojo
+  Language: java
+
+  Available parameters:
+
+    changeLogTableName
+      The name of the changelog table to use. Useful if you need to separate
+      DDL and DML when deploying to replicated environments. If not supplied
+      defaults to 'changelog'
+
+    delimiter
+      Delimiter to use to separate scripts into statements, if dbdeploy will
+      apply the scripts for you i.e. you haven't specified outputfile. Default
+      ;
+
+    delimiterType
+      Either normal: split on delimiter wherever it occurs or row only split on
+      delimiter if it features on a line by itself. Default normal.
+
+    driver
+      Specifies the jdbc driver.
+
+    encoding (Default: ${project.build.sourceEncoding})
+      Encoding to use for change scripts and output files.
+
+    lastChangeToApply
+      The highest numbered delta script to apply.
+
+    lineEnding
+      Line ending to separate indiviual statement lines when applying directly
+      to the database. Can be platform (the default line ending for the current
+      platform), cr, crlf or lf. Default platform.
+
+    password
+      The password of the dbms user who has permissions to select from the
+      schema version table.
+
+    scriptdirectory (Default: ${project.src.directory}/main/sql)
+      Full or relative path to the directory containing the delta scripts.
+
+    url
+      Specifies the url of the database that the deltas are to be applied to.
+
+    userid
+      The ID of a dbms user who has permissions to select from the schema
+      version table.

@@ -1,12 +1,13 @@
 package com.mudfish.security;
 
+import java.io.*;
+import java.security.Key;
+import java.security.SecureRandom;
+
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 import javax.crypto.KeyGenerator;
-import java.io.*;
-import java.security.Key;
-import java.security.SecureRandom;
 
 /**
  * Created by JiangWeiGen on 2018/10/28 0028.
@@ -114,9 +115,11 @@ public class SecurityUtil {
 
     private boolean isExcludeFile(File file) {
         if (file.isDirectory() && (file.getName().startsWith(".") || "target".equals(file.getName()))) {
+            System.out.println("排除目录：" + file.getName());
             return true;
         } else {
             if (file.getName().endsWith(".iml")) {
+                System.out.println("排除文件：" + file.getName());
                 return true;
             }
         }
@@ -131,6 +134,9 @@ public class SecurityUtil {
         }
         for (File srcFile :
                 srcDir.listFiles()) {
+            if (isExcludeFile(srcFile)) {
+                continue;
+            }
             if (srcFile.isDirectory()) {
                 copyFiles(srcFile.getAbsolutePath(), desDir.getAbsolutePath() + File.separator +  srcFile.getName());
                 continue;

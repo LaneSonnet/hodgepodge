@@ -25,7 +25,7 @@ public class Client {
         }
         String projectPath = getProjectPath();
         if (SecurityUtil.DECRYPT.equals(pattern)) {
-            projectPath = projectPath.replace(SecurityUtil.ENCRYPT_PROJECT_NAME, SecurityUtil.DECRYPT_PROJECT_NAME);
+            projectPath = projectPath.replace(SecurityUtil.DECRYPT_PROJECT_NAME, SecurityUtil.ENCRYPT_PROJECT_NAME);
         }
         new SecurityUtil(psw).securityAll(projectPath, pattern);
     }
