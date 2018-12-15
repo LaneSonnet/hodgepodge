@@ -122,6 +122,10 @@ public class SecurityUtil {
                 System.out.println("排除文件：" + file.getName());
                 return true;
             }
+            if (file.getName().equals(".gitignore")) {
+                System.out.println("排除文件.gitignore");
+                return true;
+            }
         }
         return false;
     }
