@@ -1,0 +1,21 @@
+<Finance>
+    <Message id="111">
+        <CSReq id="CSReq">
+            <version>1.0.1</version>
+            <date>20070625 11:51:39</date>
+            <instId>WZCB</instId>
+            <certId>12341156</certId>
+            <signNo>200705131234567890</signNo>
+            <cardNo>123456</cardNo>
+            <cardType>D</cardType>
+            <name>张三</name>
+            <gender>M</gender>
+            <certType>1</certType>
+            <certNo>111111111111111</certNo>
+            <email>zhangsan@msn.com</email>
+            <cell>13588888888</cell>
+            <address>杭州市西湖区</address>
+            <memo>测试</memo>
+        </CSReq>
+    </Message>
+</Finance>
