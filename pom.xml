@@ -11,6 +11,7 @@
         <module>db</module>
         <module>camel</module>
         <module>security</module>
+	    <module>sharding</module>
     </modules>
     <packaging>pom</packaging>
 

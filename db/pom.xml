@@ -12,8 +12,7 @@
     <artifactId>db</artifactId>
 
     <properties>
-        <db.script.directory>./src/main/resources/sql/</db.script.directory>
-        <dbchangefile.name>aaachange_file</dbchangefile.name>
+        <db.script.directory>./src/main/sql/</db.script.directory>
         <db.url>jdbc:mysql://localhost:3306/hodgepodge</db.url>
         <db.usr>root</db.usr>
         <db.pwd>root</db.pwd>

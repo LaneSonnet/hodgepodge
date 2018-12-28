@@ -1,10 +1,10 @@
 package com.mudfish.common.xml.xstream;
 
-import com.thoughtworks.xstream.XStream;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.thoughtworks.xstream.XStream;
 
 /**
  * Created by JiangWeiGen on 2018/11/18 0018.
