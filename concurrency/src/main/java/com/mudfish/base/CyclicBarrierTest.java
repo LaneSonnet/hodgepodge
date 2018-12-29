@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 
 public class CyclicBarrierTest {
 
-	private final CyclicBarrier barrier = new CyclicBarrier(3,new Runnable() {
+	private final CyclicBarrier barrier = new CyclicBarrier(3, new Runnable() {
 
 		public void run() {
 			System.out.println("栅栏释放");
@@ -30,6 +30,7 @@ public class CyclicBarrierTest {
 		}
 
 	}
+
 	private class Runner2 implements Runnable {
 
 		public void run() {
@@ -45,6 +46,7 @@ public class CyclicBarrierTest {
 		}
 
 	}
+
 	private class Runner3 implements Runnable {
 
 		public void run() {
@@ -76,12 +78,6 @@ public class CyclicBarrierTest {
 		CyclicBarrierTest test = new CyclicBarrierTest();
 		test.run();
 	}
-
-
-
-
-
-
 
 
 }

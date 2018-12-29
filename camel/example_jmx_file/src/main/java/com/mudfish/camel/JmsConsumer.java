@@ -12,30 +12,31 @@ import org.apache.camel.impl.DefaultCamelContext;
  * Created by gyrx-dskf15 on 2018/11/6.
  */
 public class JmsConsumer {
-    public static void main(String[] args) throws Exception {
-        DefaultCamelContext camelContext = new DefaultCamelContext();
-        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
-        camelContext.addComponent("jms", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
-        camelContext.addRoutes(new RouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                from("jms:queue:test.queue")
-                        .process(new Processor() {
-                            @Override
-                            public void process(Exchange exchange) throws Exception {
-                                Message message = exchange.getIn();
-                                System.out.println(message.getBody().toString());
+
+	public static void main(String[] args) throws Exception {
+		DefaultCamelContext camelContext = new DefaultCamelContext();
+		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
+		camelContext.addComponent("jms", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
+		camelContext.addRoutes(new RouteBuilder() {
+			@Override
+			public void configure() throws Exception {
+				from("jms:queue:test.queue")
+						.process(new Processor() {
+							@Override
+							public void process(Exchange exchange) throws Exception {
+								Message message = exchange.getIn();
+								System.out.println(message.getBody().toString());
 //                                exchange.getOut().setBody("consumer return");
-                            }
-                        })
-                        .to("file://test")
-                        .bean(ParseWord.class, "prase2");
+							}
+						})
+						.to("file://test")
+						.bean(ParseWord.class, "prase2");
 
-            }
-        });
-        camelContext.start();
+			}
+		});
+		camelContext.start();
 
-        Thread.sleep(100000);
+		Thread.sleep(100000);
 
-    }
+	}
 }

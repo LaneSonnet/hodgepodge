@@ -1,10 +1,10 @@
 package com.mudfish.base;
 
-public class MyTask implements Runnable{
+public class MyTask implements Runnable {
 
 	private final String taskId;
 
-	public MyTask(String taskId){
+	public MyTask(String taskId) {
 		this.taskId = taskId;
 	}
 
@@ -21,8 +21,6 @@ public class MyTask implements Runnable{
 	public String getTaskId() {
 		return taskId;
 	}
-
-
 
 
 }

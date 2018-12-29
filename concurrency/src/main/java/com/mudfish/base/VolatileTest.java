@@ -1,21 +1,23 @@
 package com.mudfish.base;
 
-public class VolatileTest extends Thread{
+public class VolatileTest extends Thread {
+
 	private volatile boolean flag = true;
+
 	@Override
 	public void run() {
 		int i = 0;
-		while(flag){
+		while (flag) {
 			System.out.println(i);
 			i++;
 		}
 		System.out.println("thread stopppppppppppppppppppppppppppppppppppppppppppppppppppppppp");
 	}
-	
-	public void stopMe(){
+
+	public void stopMe() {
 		flag = false;
 		System.out.println("stop me mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
-		
+
 	}
 
 	public static void main(String[] args) throws InterruptedException {
@@ -26,5 +28,5 @@ public class VolatileTest extends Thread{
 		Thread.sleep(3000);
 		System.out.println("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
 	}
-	
+
 }

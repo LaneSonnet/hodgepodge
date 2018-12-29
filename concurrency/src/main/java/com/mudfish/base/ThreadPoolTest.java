@@ -40,7 +40,8 @@ public class ThreadPoolTest {
 		 /*
 		  * 有界队列：当任务数大于corePoolSize时进入队列，当队列满时在不大于maxPoolSize时优先创建线程，否则拒绝
 		  */
-		ThreadPoolExecutor threadPool = new ThreadPoolExecutor(2, 5, 1, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(2));
+		ThreadPoolExecutor threadPool = new ThreadPoolExecutor(2, 5, 1, TimeUnit.SECONDS,
+				new ArrayBlockingQueue<Runnable>(2));
 		 /*
 		  * 无界队列：maxPoolSize无效
 		  */
@@ -84,19 +85,6 @@ public class ThreadPoolTest {
 				System.out.println("oh my god");
 			}
 		}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	}

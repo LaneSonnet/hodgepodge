@@ -8,21 +8,22 @@ import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
  */
 @XStreamAlias("Customer")
 public class Customer {
-//    @XStreamAsAttribute
-    private String commodity;
 
-    public String getCommodity() {
-        return commodity;
-    }
+	//    @XStreamAsAttribute
+	private String commodity;
 
-    public void setCommodity(String commodity) {
-        this.commodity = commodity;
-    }
+	public String getCommodity() {
+		return commodity;
+	}
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "commodity='" + commodity + '\'' +
-                '}';
-    }
+	public void setCommodity(String commodity) {
+		this.commodity = commodity;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer{" +
+				"commodity='" + commodity + '\'' +
+				'}';
+	}
 }

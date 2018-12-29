@@ -1,56 +1,56 @@
 @echo off
 cls
-title SQL½Å±¾´´½¨
+title SQLè„šæœ¬åˆ›å»º
 color 0A
 cls
 echo.
 echo.
 echo   =========================================================================
-echo   ***************************SQL½Å±¾´´½¨¹¤¾ß*******************************
+echo   ***************************SQLè„šæœ¬åˆ›å»ºå·¥å…·*******************************
 echo   =========================================================================
 echo.
-echo			1¡¢Ñ¡ÔñÉú³ÉÎÄ¼þÀàÐÍ£ºDDL(0) ¡¢ DML(1)
+echo			1ã€é€‰æ‹©ç”Ÿæˆæ–‡ä»¶ç±»åž‹ï¼šDDL(0) ã€ DML(1)
 echo.
-echo			2¡¢ÊäÈë´ú±ísqlÄÚÈÝµÄÎÄ¼þÃû;
+echo			2ã€è¾“å…¥ä»£è¡¨sqlå†…å®¹çš„æ–‡ä»¶å;
 echo.
-echo			3¡¢×Ô¶¯Éú³ÉÎÄ¼þ£ºÊ±¼ä´Á_ÎÄ¼þÃû_DDL(DML).sql;
+echo			3ã€è‡ªåŠ¨ç”Ÿæˆæ–‡ä»¶ï¼šæ—¶é—´æˆ³_æ–‡ä»¶å_DDL(DML).sql;
 echo.
 echo.
 :selectFileType
 echo.
 set fileType=
-set /p fileType=[INFO] ÇëÑ¡ÔñÎÄ¼þÀàÐÍ£¨0/1£©:
+set /p fileType=[INFO] è¯·é€‰æ‹©æ–‡ä»¶ç±»åž‹ï¼ˆ0/1ï¼‰:
 if /i "%fileType%"=="1" (
 	SET fileType=DML
 ) else if "%fileType%"=="0" (
 	SET fileType=DDL
 ) else (
 	echo.
-	echo [ERROR] Î´ÖªÎÄ¼þÀàÐÍ[%fileType%]£¬ÇëÖØÐÂÑ¡Ôñ£¡
+	echo [ERROR] æœªçŸ¥æ–‡ä»¶ç±»åž‹[%fileType%]ï¼Œè¯·é‡æ–°é€‰æ‹©ï¼
 	goto selectFileType
 )
 :inputFileName
 echo.
 set fileName=
-set /p fileName=[INFO] ÇëÊäÈëÎÄ¼þÃû:
+set /p fileName=[INFO] è¯·è¾“å…¥æ–‡ä»¶å:
 if /i "%fileName%"=="" (
 	echo.
-	echo [ERROR] ÎÄ¼þÃû²»ÉÙÓÚ5¸ö×Ö·û
+	echo [ERROR] æ–‡ä»¶åä¸å°‘äºŽ5ä¸ªå­—ç¬¦
 	goto inputFileName
 )
 if "%fileName:~4,1%"=="" (
 	echo.
-	echo [ERROR] ÎÄ¼þÃû²»ÉÙÓÚ5¸ö×Ö·û
+	echo [ERROR] æ–‡ä»¶åä¸å°‘äºŽ5ä¸ªå­—ç¬¦
 	goto inputFileName
 )
-echo "¡¾%fileName%¡¿"
+echo "ã€%fileName%ã€‘"
 echo.
-echo [INFO] ³ÌÐòÕýÔÚ³õÊ¼»¯. . .
+echo [INFO] ç¨‹åºæ­£åœ¨åˆå§‹åŒ–. . .
 echo.
 call mvn dbdeploy:change-script -Ddbchangefile.name=%fileName%_%fileType%
 echo.
 set choice=
-set /p choice=[INFO] ÎÄ¼þ´´½¨³É¹¦£¬°´Enter¼ü¹Ø±Õ£¬ÆäËûÈÎÒâ¼ü¼ÌÐø´´½¨ . . .
+set /p choice=[INFO] æ–‡ä»¶åˆ›å»ºæˆåŠŸï¼ŒæŒ‰Enteré”®å…³é—­ï¼Œå…¶ä»–ä»»æ„é”®ç»§ç»­åˆ›å»º . . .
 if /i "%choice%"=="" (
 	exit
 )

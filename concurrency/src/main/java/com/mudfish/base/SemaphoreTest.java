@@ -4,7 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
-public class SemaphoreTest{
+public class SemaphoreTest {
 
 	private final Semaphore semaphore = new Semaphore(3);
 
@@ -29,7 +29,7 @@ public class SemaphoreTest{
 		ExecutorService executorService = Executors.newCachedThreadPool();
 		final SemaphoreTest test = new SemaphoreTest();
 
-		for (int i=0; i<10; i++) {
+		for (int i = 0; i < 10; i++) {
 			executorService.execute(new Runnable() {
 				public void run() {
 					test.getInSubway();

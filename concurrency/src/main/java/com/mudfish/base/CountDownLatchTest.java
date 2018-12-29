@@ -10,7 +10,7 @@ public class CountDownLatchTest {
 
 	private ExecutorService executor = Executors.newCachedThreadPool();
 
-	private class Thread1 implements Runnable{
+	private class Thread1 implements Runnable {
 
 		public void run() {
 			System.out.println("thread1 启动");
@@ -23,7 +23,8 @@ public class CountDownLatchTest {
 		}
 
 	}
-	private class Thread2 implements Runnable{
+
+	private class Thread2 implements Runnable {
 
 		public void run() {
 			System.out.println("thread2 启动");
@@ -36,7 +37,8 @@ public class CountDownLatchTest {
 		}
 
 	}
-	private class Thread3 implements Runnable{
+
+	private class Thread3 implements Runnable {
 
 		public void run() {
 			System.out.println("thread3 启动");
@@ -45,7 +47,8 @@ public class CountDownLatchTest {
 		}
 
 	}
-	private class Thread4 implements Runnable{
+
+	private class Thread4 implements Runnable {
 
 		public void run() {
 			System.out.println("thread4 启动");
@@ -55,7 +58,7 @@ public class CountDownLatchTest {
 
 	}
 
-	public void runDemo () {
+	public void runDemo() {
 		executor.execute(new Thread1());
 		executor.execute(new Thread2());
 		executor.execute(new Thread3());
@@ -66,7 +69,6 @@ public class CountDownLatchTest {
 
 		CountDownLatchTest latchTest = new CountDownLatchTest();
 		latchTest.runDemo();
-
 
 
 	}

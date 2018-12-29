@@ -33,6 +33,7 @@ public class ReentrantLockTest {
 			lock.unlock();
 		}
 	}
+
 	public int consume() {
 		lock.lock();
 		try {
@@ -41,7 +42,7 @@ public class ReentrantLockTest {
 			System.out.println("消费" + num);
 			condition.signal();
 			return num;
-		}catch (InterruptedException e) {
+		} catch (InterruptedException e) {
 			return -1;
 		} finally {
 			lock.unlock();

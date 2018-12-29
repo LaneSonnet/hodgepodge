@@ -12,53 +12,54 @@ import java.util.List;
 @XStreamAlias("user")
 @XStreamConverter(DateConverter.class)
 public class User {
-    private Date birthday;
-    @XStreamAlias("first_name")
-    private String name;
-    @XStreamOmitField
-    private Integer age;
-//    @XStreamAsAttribute
-    private List<Customer> customer;
 
-    public String getName() {
-        return name;
-    }
+	private Date birthday;
+	@XStreamAlias("first_name")
+	private String name;
+	@XStreamOmitField
+	private Integer age;
+	//    @XStreamAsAttribute
+	private List<Customer> customer;
 
-    public Date getBirthday() {
-        return birthday;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
+	public Date getBirthday() {
+		return birthday;
+	}
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "birthday=" + birthday +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", customer=" + customer +
-                '}';
-    }
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	@Override
+	public String toString() {
+		return "User{" +
+				"birthday=" + birthday +
+				", name='" + name + '\'' +
+				", age=" + age +
+				", customer=" + customer +
+				'}';
+	}
 
-    public Integer getAge() {
-        return age;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
+	public Integer getAge() {
+		return age;
+	}
 
-    public List<Customer> getCustomer() {
-        return customer;
-    }
+	public void setAge(Integer age) {
+		this.age = age;
+	}
 
-    public void setCustomer(List<Customer> customer) {
-        this.customer = customer;
-    }
+	public List<Customer> getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(List<Customer> customer) {
+		this.customer = customer;
+	}
 }

@@ -1,1 +1,0 @@
-mvn dbdeploy:db-scripts -Ddb.usr=ds -Ddb.pwd=ds
