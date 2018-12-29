@@ -24,9 +24,6 @@
 
 		<import resource="classpath:dataSource.xml"/>-->
 
-	<!-- 支持以元注释的方式配置Spring -->
-	<context:annotation-config />
-	
 <!--	 Transaction
 	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />

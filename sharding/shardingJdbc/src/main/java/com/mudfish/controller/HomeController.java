@@ -15,7 +15,6 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	@RequestMapping("/home")
-	@ResponseBody
 	public String tenpayOpenAcco(@RequestBody UserVo userVo) throws Exception {
 		logger.debug("请求入参【{}】", userVo);
 		return "index";
