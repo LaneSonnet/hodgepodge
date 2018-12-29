@@ -1,17 +1,13 @@
 package com.mudfish.common;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.security.Key;
-import java.security.SecureRandom;
-
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 import javax.crypto.KeyGenerator;
+
+import java.io.*;
+import java.security.Key;
+import java.security.SecureRandom;
 
 /**
  * Created by JiangWeiGen on 2018/10/28 0028.
