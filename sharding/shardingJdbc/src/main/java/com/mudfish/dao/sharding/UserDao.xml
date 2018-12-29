@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mudfish.dao.sharding.UserDao">
+	<resultMap id="BaseResultMap" type="com.mudfish.vo.UserVo">
+		<id column="id" jdbcType="INTEGER" property="id"/>
+		<result column="name" jdbcType="VARCHAR" property="name"/>
+		<result column="age" jdbcType="INTEGER" property="age"/>
+		<result column="birthday" jdbcType="VARCHAR" property="birthday"/>
+		<result column="area" jdbcType="INTEGER" property="area"/>
+	</resultMap>
+	<sql id="baseColumn">
+		id, name, age, birthday, area
+	</sql>
+
+	<select id="queryById" parameterType="int" resultMap="BaseResultMap">
+		SELECT
+		<include refid="baseColumn"/>
+		FROM s_user
+		WHERE id = #{id}
+	</select>
+
+	<select id="queryByName" parameterType="string" resultMap="BaseResultMap">
+		SELECT
+		<include refid="baseColumn"/>
+		FROM s_user
+		WHERE name like #{name}
+	</select>
+
+	<insert id="insert" parameterType="com.mudfish.vo.UserVo">
+		insert into s_user
+		(
+		<include refid="baseColumn"/>
+		)
+		values(
+		#{id:INTEGER},
+		#{name:VARCHAR},
+		#{age:INTEGER},
+		#{birthday:VARCHAR},
+		#{area:INTEGER}
+		)
+	</insert>
+</mapper>

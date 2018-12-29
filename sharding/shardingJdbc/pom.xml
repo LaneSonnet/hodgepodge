@@ -13,6 +13,24 @@
 	<artifactId>shardingJdbc</artifactId>
 	<packaging>war</packaging>
 
+	<properties>
+		<sharding-sphere.version>3.0.0</sharding-sphere.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>io.shardingsphere</groupId>
+			<artifactId>sharding-jdbc-core</artifactId>
+			<version>${sharding-sphere.version}</version>
+		</dependency>
+		<!-- for spring namespace -->
+		<dependency>
+			<groupId>io.shardingsphere</groupId>
+			<artifactId>sharding-jdbc-spring-namespace</artifactId>
+			<version>${sharding-sphere.version}</version>
+		</dependency>
+	</dependencies>
+
 	<build>
 		<finalName>shardingJdbc</finalName>
 		<pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->

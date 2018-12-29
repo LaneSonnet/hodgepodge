@@ -1,5 +1,7 @@
 package com.mudfish.controller;
 
+import java.util.List;
+
 import com.mudfish.po.TestTable;
 import com.mudfish.service.HomeService;
 
@@ -22,12 +24,36 @@ public class HomeController {
 	@Resource
 	private HomeService homeService;
 
-	@RequestMapping("/home")
-	public String tenpayOpenAcco(int id) throws Exception {
+/*	@RequestMapping("/home")
+	public String home(int id) throws Exception {
 		logger.debug("请求入参【{}】", id);
 		TestTable test = homeService.query(id);
 		logger.debug("返回参数【{}】", test);
 		return "index";
+	}*/
+
+	@RequestMapping("/user/add")
+	public String addUser(@RequestBody UserVo userVo) throws Exception {
+		logger.debug("请求入参【{}】", userVo);
+		homeService.add(userVo);
+		return "index";
 	}
 
+	@RequestMapping("/user/queryById")
+	@ResponseBody
+	public UserVo queryById(@RequestBody UserVo userVo) throws Exception {
+		logger.debug("请求入参【{}】", userVo);
+		UserVo user = homeService.queryById(userVo.getId());
+		logger.debug("请求出参【{}】", user);
+		return user;
+	}
+
+	@RequestMapping("/user/queryByName")
+	@ResponseBody
+	public List<UserVo> queryByName(@RequestBody UserVo userVo) throws Exception {
+		logger.debug("请求入参【{}】", userVo);
+		List<UserVo> users = homeService.queryByName(userVo.getName());
+		logger.debug("请求出参【{}】", users);
+		return users;
+	}
 }

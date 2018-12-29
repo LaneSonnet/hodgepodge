@@ -1,4 +1,4 @@
-CREATE TABLE `a_user` (
+CREATE TABLE `p_user` (
   `id`       INT(11)      NOT NULL,
   `name`     VARCHAR(200) NOT NULL,
   `age`      INT(11)      DEFAULT NULL,
@@ -9,9 +9,9 @@ CREATE TABLE `a_user` (
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8
-  /
+/
 -- RANGE分区
-ALTER TABLE `a_user`
+ALTER TABLE `p_user`
 PARTITION BY RANGE (id) (
 PARTITION `p0` VALUES LESS THAN (10),
 PARTITION `p1` VALUES LESS THAN (20),
