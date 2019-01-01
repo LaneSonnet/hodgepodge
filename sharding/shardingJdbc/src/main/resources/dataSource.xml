@@ -17,38 +17,51 @@
 	<sharding:inline-strategy id="databaseStrategy" sharding-column="id" algorithm-expression="dataSource$->{id % 2}"/>
 	<sharding:inline-strategy id="userTableStrategy" sharding-column="age"
 		algorithm-expression="s_user$->{age % 2}"/>
+	<bean id="orderHintAlgorithm" class="com.mudfish.sharding.algorithm.OrderHintAlgorithm"></bean>
+	<sharding:hint-strategy id="orderHintStrategy" algorithm-ref="orderHintAlgorithm"/>
+
+	<bean id="hintShardingStrategyConfiguration"
+		class="io.shardingsphere.api.config.strategy.HintShardingStrategyConfiguration">
+		<constructor-arg index="0" ref="orderHintAlgorithm"/>
+	</bean>
 
 	<sharding:data-source id="dataSource">
-		<sharding:sharding-rule data-source-names="dataSource0,dataSource1">
+		<!-- hintShardingStrategyConfiguration强制路由 -->
+		<sharding:sharding-rule data-source-names="dataSource0,dataSource1" default-data-source-name="dataSource0"
+			default-database-strategy-ref="hintShardingStrategyConfiguration">
 			<sharding:table-rules>
+				<!-- 分库又分表 -->
 				<sharding:table-rule logic-table="s_user" actual-data-nodes="dataSource$->{0..1}.s_user$->{0..1}"
 					database-strategy-ref="databaseStrategy" table-strategy-ref="userTableStrategy"/>
-				<!--<sharding:table-rule logic-table="t_order_item" actual-data-nodes="ds$->{0..1}.t_order_item$->{0..1}"
-					database-strategy-ref="databaseStrategy" table-strategy-ref="orderItemTableStrategy"/>-->
+				<!-- 分库不分表 -->
+				<sharding:table-rule logic-table="s_order" database-strategy-ref="databaseStrategy"/>
+				<!-- 广播表 -->
+				<sharding:table-rule logic-table="c_fund"/>
 			</sharding:table-rules>
 		</sharding:sharding-rule>
+		<sharding:props>
+			<prop key="sql.show">true</prop>
+		</sharding:props>
 	</sharding:data-source>
 
 	<!-- 配置Mybatis（注意classpath路径的设置） -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
-		<property name="mapperLocations" value="classpath*:com/mudfish/dao/sharding/**/*.xml"/>
+		<property name="mapperLocations" value="classpath*:com/mudfish/dao/**/*.xml"/>
 		<!-- 自动配置别名 -->
-		<property name="typeAliasesPackage" value="com.mudfish.dao.sharding"/>
+		<property name="typeAliasesPackage" value="com.mudfish.dao"/>
 	</bean>
 	<!-- Mybatis Mapper接口数据扫描 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.mudfish.dao.sharding"/>
+		<property name="basePackage" value="com.mudfish.dao"/>
 	</bean>
 
 	<!-- 配置事务管理器 -->
-<!--
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource"/>
-		<property name="nestedTransactionAllowed" value="true"></property>
-	</bean>
-	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
--->
+		<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+			<property name="dataSource" ref="dataSource"/>
+			<property name="nestedTransactionAllowed" value="true"></property>
+		</bean>
+		<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
 	<context:property-placeholder location="classpath:dataSource.properties"/>
 	<!-- 阿里 druid数据库连接池 -->

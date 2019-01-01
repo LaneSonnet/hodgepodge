@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mudfish.dao.sharding.OrderDao">
+	<sql id="baseColumn">
+		id, user, num, amount, comment
+	</sql>
+
+	<insert id="insert" parameterType="com.mudfish.vo.OrderVo">
+		insert into s_order
+		(
+		<include refid="baseColumn"/>
+		)
+		values(
+		#{id:INTEGER},
+		#{user:INTEGER},
+		#{num:INTEGER},
+		#{amount:DECIMAL},
+		#{comment:VARCHAR}
+		)
+	</insert>
+</mapper>
