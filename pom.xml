@@ -13,6 +13,7 @@
 		<module>security</module>
 		<module>sharding</module>
 		<module>springBoot</module>
+		<module>springCloud</module>
 	</modules>
 	<packaging>pom</packaging>
 

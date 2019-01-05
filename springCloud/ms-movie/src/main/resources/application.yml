@@ -1,0 +1,5 @@
+server:
+  port: 7901
+  context-path: /ms-movie
+user:
+  userServicePath: http://localhost:7900/ms-user/simple/
