@@ -1,3 +1,4 @@
+/*
 package com.mudfish.camel;
 
 import java.io.ByteArrayOutputStream;
@@ -28,11 +29,13 @@ public class HttpServer extends RouteBuilder {
 		// 将我们编排的一个完整消息路由过程，加入到上下文中
 		camelContext.addRoutes(new HttpServer());
 
-		/*
+		*/
+/*
 	       * ========================== 为什么我们先启动一个Camel服务 再使用addRoutes添加编排好的路由呢？
 		 * 这是为了告诉各位读者，Apache Camel支持动态加载/卸载编排的路由 这很重要，因为后续设计的Broker需要依赖这种能力
 		 * ==========================
-		 */
+		 *//*
+
 
 		// 通用没有具体业务意义的代码，只是为了保证主线程不退出
 		synchronized (HttpServer.class) {
@@ -47,11 +50,13 @@ public class HttpServer extends RouteBuilder {
 				.to("log:helloworld?showExchangeId=true");
 	}
 
-	/**
+	*/
+/**
 	 * 这个处理器用来完成输入的json格式的转换
 	 *
 	 * @author yinwenjie
-	 */
+	 *//*
+
 	public class HttpProcessor implements Processor {
 
 		public void process(Exchange exchange) throws Exception {
@@ -69,9 +74,11 @@ public class HttpServer extends RouteBuilder {
 			}
 		}
 
-		/**
+		*/
+/**
 		 * 从stream中分析字符串内容
-		 */
+		 *//*
+
 		private String analysisMessage(InputStream bodyStream) throws IOException {
 			ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 			byte[] contextBytes = new byte[4096];
@@ -89,3 +96,4 @@ public class HttpServer extends RouteBuilder {
 		}
 	}
 }
+*/

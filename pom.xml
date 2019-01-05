@@ -12,6 +12,7 @@
 		<module>camel</module>
 		<module>security</module>
 		<module>sharding</module>
+		<module>springBoot</module>
 	</modules>
 	<packaging>pom</packaging>
 
