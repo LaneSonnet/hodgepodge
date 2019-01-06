@@ -1,0 +1,15 @@
+security:
+  basic:
+    enabled: true
+  user:
+    name: user
+    password: 12345678
+server:
+  port: 8761
+  context-path: /ms-eureka
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://user:12345678@localhost:8761/ms-eureka
