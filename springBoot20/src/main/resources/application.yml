@@ -1,0 +1,14 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /springBoot
+mybatis:
+  type-aliases-package: com.jiangwg.vo
+  mapper-locations: classpath:com/jiangwg/dao/**/*.xml
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/hodgepodge
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
