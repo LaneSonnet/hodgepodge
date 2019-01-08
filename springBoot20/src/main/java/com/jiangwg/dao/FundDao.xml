@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiangwg.dao.FundDao">
+
+	<resultMap id="BaseResultMap" type="com.jiangwg.vo.FundVo">
+		<result column="fund_name" jdbcType="VARCHAR" property="fundName"/>
+		<result column="fund_code" jdbcType="VARCHAR" property="fundCode"/>
+	</resultMap>
+
+	<insert id="insert" parameterType="com.jiangwg.vo.FundVo">
+		INSERT INTO c_fund
+		(
+			fund_name, fund_code
+		)
+		VALUES (
+			#{fundName:VARCHAR},
+			#{fundCode:VARCHAR}
+		)
+	</insert>
+
+	<select id="queryByName" parameterType="string" resultMap="BaseResultMap">
+		SELECT
+			fund_name, fund_code
+		FROM c_fund
+		WHERE fund_name like #{fundName}
+	</select>
+</mapper>
