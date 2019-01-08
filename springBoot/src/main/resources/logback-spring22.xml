@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<contextName>springBoot</contextName>
+
+	<property name="FILE_MAIN_NAME" value="${HOSTNAME}.${CONTEXT_NAME}.%d{yyyy-MM-dd-HH}" />
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-4relative [%thread] %-5level %logger:%L%n %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="logfile_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<Prudent>true</Prudent>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>
+				logs/${CONTEXT_NAME}/error/${FILE_MAIN_NAME}.error.log
+			</FileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<Pattern>
+				<![CDATA[
+				%d{HH:mm:ss.SSS} [%replace(%thread){" for queue: 'weblogic.kernel.Default \(self-tuning\)'",''}] %.-1level %logger{32} - %msg %n
+				]]>
+			</Pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="logfile_debug" class="ch.qos.logback.classic.AsyncAppender">
+		<queueSize>512</queueSize>
+		<appender name="_logfile_debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+			<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+				<level>DEBUG</level>
+			</filter>
+			<Prudent>false</Prudent>
+			<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+				<FileNamePattern>
+					logs/${CONTEXT_NAME}/debug/${FILE_MAIN_NAME}.debug.log
+				</FileNamePattern>
+			</rollingPolicy>
+			<encoder>
+				<immediateFlush>true</immediateFlush>
+				<Pattern>
+					<![CDATA[
+                %d{HH:mm:ss.SSS} [%replace(%thread){" for queue: 'weblogic.kernel.Default \(self-tuning\)'",''}][%-5level] %logger - %msg %n
+                ]]>
+				</Pattern>
+				<charset>UTF-8</charset>
+			</encoder>
+		</appender>
+	</appender>
+
+	<!-- DEBUG,INFO,WARN -->
+	<root level="DEBUG">
+		<appender-ref ref="console" />
+<!--		<appender-ref ref="logfile_error" />
+		<appender-ref ref="logfile_debug" />-->
+	</root>
+
+<!--	<logger name="ds" level="DEBUG"/>
+	<logger name="java.sql" level="DEBUG" />-->
+</configuration>

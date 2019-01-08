@@ -1,14 +1,27 @@
 package com.jiangwg.web;
 
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.jiangwg.dao.UserDao;
+import com.jiangwg.po.UserPo;
 
 /**
  * Created by JiangWeiGen on 2017/12/29 0029.
  */
 @RestController
 public class HomeController {
+
+    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+    @Resource
+    private UserDao userDao;
 
 /*    @RequestMapping("/hello")
     public String hello(){
@@ -31,5 +44,11 @@ public class HomeController {
             throw new Exception("访问出错");
         }*/
         return customer1;
+    }
+
+    @RequestMapping("/getUser")
+    public List<UserPo> getUser(@RequestBody String name) throws Exception {
+        logger.info("请求入参【{}】", name);
+        return userDao.selectByName("%" + name + "%");
     }
 }

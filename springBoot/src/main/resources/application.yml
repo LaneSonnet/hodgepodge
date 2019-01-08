@@ -1,0 +1,14 @@
+mybatis:
+  type-aliases-package: com.jiangwg.po
+  mapper-locations: classpath:com/jiangwg/dao/**/*.xml
+spring:
+  datasource:
+    platform: h2
+    schema: classpath:schema.sql
+    data: classpath:data.sql
+server:
+  port: 80
+  context-path: /springBoot
+
+#logging:
+#  config: classpath:logback-spring22.xml
