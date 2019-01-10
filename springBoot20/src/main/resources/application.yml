@@ -12,3 +12,26 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
+myvar:
+  errorcodes:
+    - 12345
+    - 4324324
+    - 121ewe
+#  map:
+#    key1: value1
+#    "[/key2]": value2
+#    /key3: value3
+  message: ajingweige
+  security:
+    username: laojiang
+    password: 12345678
+---
+spring:
+  profiles: test
+myvar:
+    message: testEnv
+---
+spring:
+  profiles: product
+myvar:
+    message: productEnv

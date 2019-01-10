@@ -7,6 +7,14 @@ public class FundVo {
 	private String fundName;
 	private String fundCode;
 
+	public FundVo() {
+	}
+
+	public FundVo(String fundName, String fundCode) {
+		this.fundName = fundName;
+		this.fundCode = fundCode;
+	}
+
 	@Override
 	public String toString() {
 		return "FundVo{" +
