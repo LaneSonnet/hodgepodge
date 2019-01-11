@@ -3,11 +3,11 @@ mybatis:
   mapper-locations: classpath:com/jiangwg/dao/**/*.xml
 spring:
   datasource:
-    platform: h2
+    platform: ${myvar.db.platform}
     schema: classpath:schema.sql
     data: classpath:data.sql
 server:
-  port: 80
+  port: ${myvar.server.port}
   context-path: /springBoot
 
 #logging:

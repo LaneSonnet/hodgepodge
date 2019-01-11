@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jiangwg.dao.UserDao;
+import com.jiangwg.po.RandomPro;
 import com.jiangwg.po.UserPo;
 
 /**
@@ -22,6 +23,9 @@ public class HomeController {
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
     @Resource
     private UserDao userDao;
+
+    @Resource
+    private RandomPro randomPro;
 
 /*    @RequestMapping("/hello")
     public String hello(){
@@ -49,6 +53,7 @@ public class HomeController {
     @RequestMapping("/getUser")
     public List<UserPo> getUser(@RequestBody String name) throws Exception {
         logger.info("请求入参【{}】", name);
+        logger.info("随机值【{}】", randomPro.toString());
         return userDao.selectByName("%" + name + "%");
     }
 }
