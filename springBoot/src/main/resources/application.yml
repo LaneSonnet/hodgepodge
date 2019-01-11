@@ -6,9 +6,23 @@ spring:
     platform: ${myvar.db.platform}
     schema: classpath:schema.sql
     data: classpath:data.sql
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths: /**
+      enabled: true
+    static-locations: classpath:/static/
+  mvc:
+    static-path-pattern: /staticsss/**
 server:
   port: ${myvar.server.port}
   context-path: /springBoot
 
 #logging:
 #  config: classpath:logback-spring22.xml
+
+myvar:
+  privateKey: 987654321
+  publicKey: 987654321
