@@ -6,10 +6,12 @@ security:
     password: 12345678
 server:
   port: 8761
-  context-path: /ms-eureka
+#  context-path: /ms-eureka
 eureka:
   client:
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      defaultZone: http://user:12345678@localhost:8761/ms-eureka
+      defaultZone: http://user:12345678@localhost:8761/eureka
+  server:
+    enable-self-preservation: false

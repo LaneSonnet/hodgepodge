@@ -1,6 +1,6 @@
 server:
   port: 7900
-  context-path: /ms-user
+#  context-path: /ms-user
 spring:
   jpa:
     generate-ddl: false
@@ -11,6 +11,8 @@ spring:
     platform: h2
     schema: classpath:schema.sql
     data: classpath:data.sql
+  application:
+    name: ms-user
 logging:
   level:
     root: info
@@ -18,3 +20,14 @@ logging:
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
     org.hibernate.type.descriptor.sql.BasicExtractor: TRACE
     com.jiangwg: DEBUG
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+    service-url:
+      defaultZone: http://user:12345678@localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 2
