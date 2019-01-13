@@ -12,6 +12,7 @@
 		<module>ms-user</module>
 		<module>ms-movie</module>
 		<module>ms-eureka</module>
+		<module>ms-movie-ribbon</module>
 	</modules>
 	<packaging>pom</packaging>
 
