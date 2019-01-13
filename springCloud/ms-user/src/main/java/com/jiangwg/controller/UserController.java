@@ -1,10 +1,16 @@
 package com.jiangwg.controller;
 
+import java.math.BigDecimal;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jiangwg.entity.User;
@@ -15,30 +21,39 @@ import com.netflix.discovery.EurekaClient;
 @RestController
 public class UserController {
 
-  @Autowired
-  private UserRepository userRepository;
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-  @Autowired
-  private EurekaClient eurekaClient;
+	@Autowired
+	private UserRepository userRepository;
 
-  @Autowired
-  private DiscoveryClient discoveryClient;
+	@Autowired
+	private EurekaClient eurekaClient;
 
-  @GetMapping("/simple/{id}")
-  public User findById(@PathVariable Long id) {
-    return this.userRepository.findOne(id);
-  }
+	@Autowired
+	private DiscoveryClient discoveryClient;
 
-  @GetMapping("/eureka-instance")
-  public String serviceUrl() {
-    InstanceInfo instance = this.eurekaClient.getNextServerFromEureka("MS-USER", false);
-    return instance.getHomePageUrl();
-  }
+	@GetMapping("/simple/{id}")
+	public User findById(@PathVariable Long id) {
+		return this.userRepository.findOne(id);
+	}
 
-  @GetMapping("/instance-info")
-  public ServiceInstance showInfo() {
-    ServiceInstance localServiceInstance = this.discoveryClient.getLocalServiceInstance();
-    return localServiceInstance;
-  }
+	@PostMapping("/user")
+	public User findUser(@RequestBody User user) {
+		logger.info("请求入参【{}】", user);
+		user.setBalance(new BigDecimal(100000000));
+		return user;
+	}
+
+	@GetMapping("/eureka-instance")
+	public String serviceUrl() {
+		InstanceInfo instance = this.eurekaClient.getNextServerFromEureka("MS-USER", false);
+		return instance.getHomePageUrl();
+	}
+
+	@GetMapping("/instance-info")
+	public ServiceInstance showInfo() {
+		ServiceInstance localServiceInstance = this.discoveryClient.getLocalServiceInstance();
+		return localServiceInstance;
+	}
 
 }
