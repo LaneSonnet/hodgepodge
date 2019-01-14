@@ -54,6 +54,9 @@ public class HomeController {
     public List<UserPo> getUser(@RequestBody String name) throws Exception {
         logger.info("请求入参【{}】", name);
         logger.info("随机值【{}】", randomPro.toString());
+        if (true) {
+            throw new RuntimeException("getuser exception嗷嗷嗷啊");
+        }
         return userDao.selectByName("%" + name + "%");
     }
 }

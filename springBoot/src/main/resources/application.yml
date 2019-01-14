@@ -15,7 +15,12 @@ spring:
       enabled: true
     static-locations: classpath:/static/
   mvc:
-    static-path-pattern: /staticsss/**
+    static-path-pattern: /**
+  http:
+    encoding:
+      enabled: true
+      charset: utf-8
+      force: true
 server:
   port: ${myvar.server.port}
   context-path: /springBoot
