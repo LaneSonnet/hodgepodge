@@ -6,6 +6,7 @@ spring:
     platform: ${myvar.db.platform}
     schema: classpath:schema.sql
     data: classpath:data.sql
+# 静态资源处理
   resources:
     chain:
       strategy:
@@ -16,6 +17,7 @@ spring:
     static-locations: classpath:/static/
   mvc:
     static-path-pattern: /**
+# 全局编码设置
   http:
     encoding:
       enabled: true
@@ -27,7 +29,8 @@ server:
 
 #logging:
 #  config: classpath:logback-spring22.xml
-
 myvar:
   privateKey: 987654321
   publicKey: 987654321
+
+# Actuator
