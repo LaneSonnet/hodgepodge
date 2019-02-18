@@ -28,19 +28,17 @@ public class NettyClient {
 	private Channel channel;
 	private NioEventLoopGroup group;
 	private int connectTimes = 0;
-	private Executor executor;
+	private Thread thread;
 	private String host;
 	private int port;
 
-	public NettyClient(Executor executor, String host, int port) {
-		this.executor = executor;
+	public NettyClient(String host, int port) {
 		this.host = host;
 		this.port = port;
 	}
 
 	public void connect() {
 		try {
-			group = new NioEventLoopGroup();
 			Bootstrap bootstrap = new Bootstrap();
 			bootstrap.group(group).channel(NioSocketChannel.class)
 					.handler(new ChannelInitializer<SocketChannel>() {
@@ -49,6 +47,7 @@ public class NettyClient {
 							channel.pipeline()
 									.addLast(new NettyEncoder())
 									.addLast(new NettyDecoder(MudfishRpcResponse.class))
+									.addLast(new HeartBeatHandler())
 									.addLast(new NettyClientHandler());
 						}
 					})
@@ -57,34 +56,39 @@ public class NettyClient {
 					.option(ChannelOption.SO_KEEPALIVE, true);
 			this.channel = bootstrap.connect(host, port).sync().channel();
 			logger.info("***********MUDFISH CLIENT CONNECT SUCCESS, HOST【{}】PORT【{}】**********", host, port);
+			connectTimes = 0;
 			//TODO 更新数据库状态
 			channel.closeFuture().sync();
 		} catch (Exception e) {
 			logger.debug("mudfish client connect exception：", e);
 		} finally {
 			//TODO 更新数据库状态
-			if (connectTimes++ > 3) {
-				channel.close();
+			if (connectTimes++ > 5) {
+				if (channel != null) {
+					channel.close();
+				}
 				group.shutdownGracefully();
-				return;
-			}
-			try {
-				TimeUnit.SECONDS.sleep(3);
-				logger.info("mudfish client reconnect...");
-				connect();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			} else {
+				try {
+					TimeUnit.SECONDS.sleep(10);
+					logger.info("mudfish client reconnect...");
+					connect();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
 
 	public void start() {
-		executor.execute(new Runnable() {
-			@Override
+		thread = new Thread(new Runnable() {
 			public void run() {
+				group = new NioEventLoopGroup();
 				connect();
 			}
 		});
+		thread.setDaemon(true);
+		thread.start();
 	}
 
 	public void send(MudfishMessage message) throws InterruptedException {

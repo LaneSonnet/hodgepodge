@@ -38,6 +38,7 @@ public class NettyServer {
 									channel.pipeline()
 											.addLast(new NettyDecoder(MudfishRpcRequest.class))
 											.addLast(new NettyEncoder())
+											.addLast(new HeartBeatHandler())
 											.addLast(new NettyServerHandler());
 								}
 							})

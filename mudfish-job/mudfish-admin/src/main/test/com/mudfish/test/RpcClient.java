@@ -17,8 +17,7 @@ import com.mudfish.struct.MudfishRpcRequest;
 public class RpcClient {
 
 	public static void main(String[] args) throws Exception {
-		ExecutorService executorService = Executors.newCachedThreadPool();
-		NettyClient nettyClient = new NettyClient(executorService, "127.0.0.1", 8009);
+		NettyClient nettyClient = new NettyClient("127.0.0.1", 8009);
 		nettyClient.start();
 		MudfishRpcRequest request = new MudfishRpcRequest();
 		request.setRequestId("12345678");
