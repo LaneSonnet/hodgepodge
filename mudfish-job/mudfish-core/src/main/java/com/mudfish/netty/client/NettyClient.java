@@ -63,14 +63,14 @@ public class NettyClient {
 			logger.debug("mudfish client connect exception：", e);
 		} finally {
 			//TODO 更新数据库状态
-			if (connectTimes++ > 5) {
+			if (connectTimes++ > 3) {
 				if (channel != null) {
 					channel.close();
 				}
 				group.shutdownGracefully();
 			} else {
 				try {
-					TimeUnit.SECONDS.sleep(10);
+					TimeUnit.SECONDS.sleep(30);
 					logger.info("mudfish client reconnect...");
 					connect();
 				} catch (InterruptedException e) {

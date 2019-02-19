@@ -1,7 +1,7 @@
 server:
-  port: 8080
+  port: 8085
   servlet:
-    context-path: /mudfish-admin
+    context-path: /mudfish-worker
 mybatis:
   type-aliases-package: com.mudfish.po
   mapper-locations: classpath:com/mudfish/dao/**/*.xml
@@ -12,3 +12,7 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
+mudfishWorker:
+  rpc:
+    port: 8090
+debug: true
