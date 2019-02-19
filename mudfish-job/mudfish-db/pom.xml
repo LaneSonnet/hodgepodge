@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.mudfish</groupId>
+  <artifactId>mudfish-db</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>mudfish-db</name>
+
+  <properties>
+    <db.script.directory>./src/main/sql/</db.script.directory>
+    <db.url>jdbc:mysql://localhost:3306/mudfish_job</db.url>
+    <db.usr>root</db.usr>
+    <db.pwd>root</db.pwd>
+    <!--<flyway.version>5.0.3</flyway.version>-->
+  </properties>
+
+  <dependencies>
+    <!--        <dependency>
+								<groupId>org.flywaydb</groupId>
+								<artifactId>flyway-core</artifactId>
+								<version>${flyway.version}</version>
+						</dependency>-->
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.dbdeploy</groupId>
+        <artifactId>maven-dbdeploy-plugin</artifactId>
+        <version>3.0M3</version>
+
+        <configuration>
+          <scriptdirectory>${db.script.directory}</scriptdirectory>
+          <name>${dbchangefile.name}</name>
+          <encoding>UTF-8</encoding>
+          <lineEnding>lf</lineEnding>
+          <outputfile>./target/sql/apply.sql</outputfile>
+          <undoOutputfile>./target/sql/undo.sql</undoOutputfile>
+          <driver>com.mysql.jdbc.Driver</driver>
+          <url>${db.url}</url>
+          <userid>${db.usr}</userid>
+          <password>${db.pwd}</password>
+          <dbms>hodgepodge</dbms>
+          <delimiter>/</delimiter>
+          <delimiterType>row</delimiterType>
+        </configuration>
+
+        <dependencies>
+          <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.9</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </build>
+</project>

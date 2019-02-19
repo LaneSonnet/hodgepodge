@@ -81,6 +81,7 @@ public class NettyClient {
 					new InetSocketAddress(host, port),
 					new InetSocketAddress(NettyConstant.LOCALIP,
 							NettyConstant.LOCAL_PORT)).sync();
+			System.out.println("=======================================================fdsafasf");
 			// 当对应的channel关闭的时候，就会返回对应的channel。
 			// Returns the ChannelFuture which will be notified when this channel is closed. This method always returns the same future instance.
 			Channel channel = future.channel().closeFuture().sync().channel();
@@ -109,6 +110,7 @@ public class NettyClient {
 	 */
 	public static void main(String[] args) throws Exception {
 		new NettyClient().connect(NettyConstant.PORT, NettyConstant.REMOTEIP);
+		System.out.println("dasfsafsa-----------------------------------------------------------");
 	}
 
 }

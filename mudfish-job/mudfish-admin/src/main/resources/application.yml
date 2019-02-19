@@ -1,0 +1,14 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /mudfish-admin
+mybatis:
+  type-aliases-package: com.mudfish.po
+  mapper-locations: classpath:com/mudfish/dao/**/*.xml
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/mudfish_job
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
