@@ -18,7 +18,7 @@ public class HeartBeatHandler extends SimpleChannelInboundHandler<MudfishMessage
     @Override
     public void channelRead0(final ChannelHandlerContext ctx, final MudfishMessage request) throws Exception {
         if (MessageType.HEART_BEAT == request.getHeader().getType()) {
-            logger.debug("Mudfish server accept heart beat --> 【{}】", request);
+            logger.info("Mudfish server accept heart beat --> 【{}】", request);
         } else {
             ctx.fireChannelRead(request);
         }

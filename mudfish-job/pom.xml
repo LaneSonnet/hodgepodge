@@ -10,6 +10,7 @@
     <module>mudfish-admin</module>
     <module>mudfish-db</module>
     <module>mudfish-core</module>
+	  <module>mudfish-worker</module>
   </modules>
   <name>mudfish-job</name>
 
