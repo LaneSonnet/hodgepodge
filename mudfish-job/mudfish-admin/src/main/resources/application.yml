@@ -13,3 +13,6 @@ spring:
     password: root
     driver-class-name: com.mysql.jdbc.Driver
 debug: true
+mudfish-admin:
+  serverParams:
+    - 127.0.0.1:8090

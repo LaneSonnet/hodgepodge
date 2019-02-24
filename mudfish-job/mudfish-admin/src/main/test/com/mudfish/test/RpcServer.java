@@ -9,8 +9,8 @@ import com.mudfish.netty.server.NettyServer;
  */
 public class RpcServer {
 	public static void main(String[] args) throws Exception {
-		NettyServer server = new NettyServer();
+/*		NettyServer server = new NettyServer();
 		server.start(8009);
-		TimeUnit.SECONDS.sleep(2000000);
+		TimeUnit.SECONDS.sleep(2000000);*/
 	}
 }

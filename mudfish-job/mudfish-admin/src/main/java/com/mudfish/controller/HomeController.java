@@ -5,17 +5,16 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mudfish.interfaces.RpcTest;
+import com.mudfish.interfaces.rpc.RpcTest;
 
 /**
  * Created by Mudfish on 2019/2/16 0016.
  */
 @RestController
-@DependsOn("rpcBeanFactory")
+@DependsOn("rpcBeanRegister")
 public class HomeController {
 
 	@Autowired

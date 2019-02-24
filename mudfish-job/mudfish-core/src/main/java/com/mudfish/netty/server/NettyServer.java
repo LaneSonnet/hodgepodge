@@ -1,8 +1,13 @@
 package com.mudfish.netty.server;
 
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mudfish.factory.RpcInvokeFactory;
 import com.mudfish.netty.codec.NettyDecoder;
 import com.mudfish.netty.codec.NettyEncoder;
 import com.mudfish.struct.MudfishRpcRequest;
@@ -20,14 +25,25 @@ public class NettyServer {
 
 	private static final Logger logger = LoggerFactory.getLogger(NettyServer.class);
 	private Thread thread;
+	private RpcInvokeFactory invokeFactory;
 
-	public void start(final int port) throws Exception {
+	public NettyServer(RpcInvokeFactory invokeFactory) {
+		this.invokeFactory = invokeFactory;
+	}
+
+	public void start(final int port) {
 
 		thread = new Thread(new Runnable() {
-			@Override
 			public void run() {
 				EventLoopGroup bossGroup = new NioEventLoopGroup();
 				EventLoopGroup workerGroup = new NioEventLoopGroup();
+				final ThreadPoolExecutor serverHandlerPool = new ThreadPoolExecutor(
+						60,
+						300,
+						60L,
+						TimeUnit.SECONDS,
+						new LinkedBlockingQueue<Runnable>()
+				);
 				try {
 					// start server
 					ServerBootstrap bootstrap = new ServerBootstrap();
@@ -39,7 +55,7 @@ public class NettyServer {
 											.addLast(new NettyDecoder(MudfishRpcRequest.class))
 											.addLast(new NettyEncoder())
 											.addLast(new HeartBeatHandler())
-											.addLast(new NettyServerHandler());
+											.addLast(new NettyServerHandler(serverHandlerPool, invokeFactory));
 								}
 							})
 							.option(ChannelOption.SO_TIMEOUT, 100)
@@ -58,6 +74,7 @@ public class NettyServer {
 					}
 				} finally {
 					try {
+						serverHandlerPool.shutdown();
 						workerGroup.shutdownGracefully();
 						bossGroup.shutdownGracefully();
 					} catch (Exception e) {
@@ -70,7 +87,7 @@ public class NettyServer {
 		thread.start();
 	}
 
-	public void stop() throws Exception {
+	public void stop() {
 		if (thread != null && thread.isAlive()) {
 			thread.interrupt();
 		}

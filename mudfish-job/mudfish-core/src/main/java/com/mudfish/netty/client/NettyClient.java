@@ -31,6 +31,7 @@ public class NettyClient {
 	private Thread thread;
 	private String host;
 	private int port;
+	private String id;
 
 	public NettyClient(String host, int port) {
 		this.host = host;
@@ -91,7 +92,24 @@ public class NettyClient {
 		thread.start();
 	}
 
+	public void close() {
+		if (this.channel!=null && this.channel.isActive()) {
+			this.channel.close();		// if this.channel.isOpen()
+		}
+		if (this.group!=null && !this.group.isShutdown()) {
+			this.group.shutdownGracefully();
+		}
+	}
+
 	public void send(MudfishMessage message) throws InterruptedException {
 		this.channel.writeAndFlush(message);
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 }
