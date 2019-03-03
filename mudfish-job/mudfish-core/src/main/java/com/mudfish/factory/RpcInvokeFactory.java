@@ -2,11 +2,13 @@ package com.mudfish.factory;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
+import com.mudfish.common.constants.RpcServerConstant;
 import com.mudfish.constants.MessageType;
 import com.mudfish.exception.MudfishRpcException;
 import com.mudfish.struct.MudfishMessage;
@@ -20,7 +22,7 @@ public class RpcInvokeFactory {
 
 	private static final Logger logger = LoggerFactory.getLogger(RpcInvokeFactory.class);
 
-	private HashMap<String, Object> serviceBeans = new HashMap<String, Object>();
+	private final ConcurrentHashMap<String, Object> serviceBeans = new ConcurrentHashMap<String, Object>();
 	private ApplicationContext applicationContext;
 	private static final long BLOCK_TIME_OUT = 30 * 1000;
 
@@ -33,7 +35,7 @@ public class RpcInvokeFactory {
 		try {
 			MudfishRpcRequest request = (MudfishRpcRequest) message.getBody();
 			response.setRequestId(request.getRequestId());
-			if (System.currentTimeMillis() - request.getCreateMillisTime() > BLOCK_TIME_OUT) {
+			if (System.currentTimeMillis() - request.getCreateMillisTime() > RpcServerConstant.SERVER_BLOCK_TIME_OUT) {
 				throw new MudfishRpcException("服务器忙，请稍后重试！");
 			}
 			Object obj = reflectInvoke(request);

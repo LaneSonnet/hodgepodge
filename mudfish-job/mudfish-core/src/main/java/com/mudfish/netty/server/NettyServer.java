@@ -1,5 +1,8 @@
 package com.mudfish.netty.server;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -7,9 +10,13 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mudfish.common.constants.RpcServerConstant;
+import com.mudfish.dao.rpc.RpcServerDao;
+import com.mudfish.exception.MudfishRpcException;
 import com.mudfish.factory.RpcInvokeFactory;
 import com.mudfish.netty.codec.NettyDecoder;
 import com.mudfish.netty.codec.NettyEncoder;
+import com.mudfish.po.rpc.RpcServer;
 import com.mudfish.struct.MudfishRpcRequest;
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -26,6 +33,8 @@ public class NettyServer {
 	private static final Logger logger = LoggerFactory.getLogger(NettyServer.class);
 	private Thread thread;
 	private RpcInvokeFactory invokeFactory;
+	private RpcServerDao rpcServerDao;
+	private Integer id;
 
 	public NettyServer(RpcInvokeFactory invokeFactory) {
 		this.invokeFactory = invokeFactory;
@@ -64,14 +73,11 @@ public class NettyServer {
 							.option(ChannelOption.SO_REUSEADDR, true)
 							.childOption(ChannelOption.SO_KEEPALIVE, true);
 					ChannelFuture future = bootstrap.bind(port).sync();
+					initStatus(port, this.hashCode() + "");
 					printStartFlag(port);
 					future.channel().closeFuture().sync();
 				} catch (Exception e) {
-					if (e instanceof InterruptedException) {
-						logger.info("mudfish server stop by interrupted");
-					} else {
-						logger.error("mudfish server occur error：", e);
-					}
+					throw new MudfishRpcException("mudfish server occur excption：" + e.getMessage());
 				} finally {
 					try {
 						serverHandlerPool.shutdown();
@@ -91,7 +97,27 @@ public class NettyServer {
 		if (thread != null && thread.isAlive()) {
 			thread.interrupt();
 		}
+		if (id != null) {
+			rpcServerDao.deleteById(id);
+		}
 		logger.info("mudfish server destroy success.");
+	}
+
+	public void setRpcServerDao(RpcServerDao rpcServerDao) {
+		this.rpcServerDao = rpcServerDao;
+	}
+
+	private void initStatus(int rpcPort, String instantId) throws UnknownHostException {
+		RpcServer rpcServer = new RpcServer();
+		rpcServer.setIp(InetAddress.getLocalHost().getHostAddress());
+		rpcServer.setRpcPort(rpcPort);
+		Date date = new Date();
+		rpcServer.setStartTime(date);
+		rpcServer.setLastUpdateTime(date);
+		rpcServer.setStatus(RpcServerConstant.STATUS_START);
+		rpcServer.setInstanceId(instantId);
+		rpcServerDao.create(rpcServer);
+		this.id = rpcServer.getId();
 	}
 
 	public void printStartFlag(int port) {

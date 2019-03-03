@@ -4,7 +4,7 @@ server:
     context-path: /mudfish-worker
 mybatis:
   type-aliases-package: com.mudfish.po
-  mapper-locations: classpath:com/mudfish/dao/**/*.xml
+  mapper-locations: classpath*:com/mudfish/dao/**/*.xml
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
