@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mudfish.dao.rpc.RpcServerDao">
+	<resultMap id="BaseResultMap" type="com.mudfish.po.rpc.RpcServer">
+		<id column="id" jdbcType="INTEGER" property="id"/>
+		<result column="ip" jdbcType="VARCHAR" property="ip"/>
+		<result column="rpc_port" jdbcType="INTEGER" property="rpcPort"/>
+		<result column="status" jdbcType="TINYINT" property="status"/>
+		<result column="instance_id" jdbcType="VARCHAR" property="instanceId"/>
+		<result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+		<result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+	</resultMap>
+
+	<insert id="create" keyProperty="id" useGeneratedKeys="true" parameterType="com.mudfish.po.rpc.RpcServer">
+		INSERT INTO md_rpc_server (
+			ip,
+			rpc_port,
+			status,
+			start_time,
+			last_update_time,
+			instance_id
+		) VALUES (
+			#{ip,jdbcType=CHAR},
+			#{rpcPort,jdbcType=INTEGER},
+			#{status,jdbcType=TINYINT},
+			#{startTime,jdbcType=TIMESTAMP},
+			#{lastUpdateTime,jdbcType=TIMESTAMP},
+			#{instanceId,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<delete id="deleteById" parameterType="int">
+		DELETE FROM md_rpc_server
+		WHERE id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<delete id="delete" parameterType="map">
+		DELETE FROM md_rpc_server
+		WHERE ip = #{ip,jdbcType=CHAR}
+		AND rpc_port = #{rpcPort,jdbcType=INTEGER}
+	</delete>
+
+	<select id="queryByStatus" parameterType="int" resultMap="BaseResultMap">
+		SELECT
+			id,
+			ip,
+			rpc_port,
+			status,
+			start_time,
+			instance_id,
+			last_update_time
+		FROM md_rpc_server
+		WHERE status = #{status,jdbcType=TINYINT}
+	</select>
+</mapper>

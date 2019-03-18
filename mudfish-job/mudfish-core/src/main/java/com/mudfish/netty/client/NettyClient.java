@@ -1,11 +1,11 @@
 package com.mudfish.netty.client;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mudfish.common.constants.RpcServerConstant;
 import com.mudfish.netty.codec.NettyDecoder;
 import com.mudfish.netty.codec.NettyEncoder;
 import com.mudfish.struct.MudfishMessage;
@@ -25,12 +25,13 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 public class NettyClient {
 
 	private static final Logger logger = LoggerFactory.getLogger(NettyClient.class);
-	private Channel channel;
+	private volatile Channel channel;
 	private NioEventLoopGroup group;
 	private int connectTimes = 0;
-	private Thread thread;
-	private String host;
-	private int port;
+	private volatile Thread thread;
+	private volatile String host;
+	private volatile int port;
+	private String id;
 
 	public NettyClient(String host, int port) {
 		this.host = host;
@@ -70,7 +71,7 @@ public class NettyClient {
 				group.shutdownGracefully();
 			} else {
 				try {
-					TimeUnit.SECONDS.sleep(30);
+					TimeUnit.SECONDS.sleep(RpcServerConstant.CLIENT_RECONNECT_INTERVAL_TIME);
 					logger.info("mudfish client reconnect...");
 					connect();
 				} catch (InterruptedException e) {
@@ -91,7 +92,36 @@ public class NettyClient {
 		thread.start();
 	}
 
+	public void close() {
+		if (this.channel!=null && this.channel.isActive()) {
+			this.channel.close();		// if this.channel.isOpen()
+		}
+		if (this.group!=null && !this.group.isShutdown()) {
+			this.group.shutdownGracefully();
+		}
+	}
+
 	public void send(MudfishMessage message) throws InterruptedException {
 		this.channel.writeAndFlush(message);
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public Thread getThread() {
+		return thread;
+	}
+
+	public String getHost() {
+		return host;
+	}
+
+	public int getPort() {
+		return port;
 	}
 }
