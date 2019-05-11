@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mudfish.common.constants.RpcServerConstant;
 import com.mudfish.constants.MessageType;
 import com.mudfish.struct.MudfishMessage;
 import com.mudfish.struct.MudfishRpcRequest;
@@ -36,8 +37,8 @@ public class HeartBeatHandler extends SimpleChannelInboundHandler<MudfishMessage
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		heartBeat = ctx.executor().scheduleAtFixedRate(
-				new HeartBeatTask(ctx), 0, 30000,
-				TimeUnit.MILLISECONDS);
+				new HeartBeatTask(ctx), 0, RpcServerConstant.CLIENT_HEARTBEAT_INTERVAL_TIME,
+				TimeUnit.SECONDS);
 	}
 
 	private class HeartBeatTask implements Runnable {

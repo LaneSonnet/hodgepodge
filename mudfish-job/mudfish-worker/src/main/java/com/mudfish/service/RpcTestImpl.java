@@ -12,6 +12,6 @@ public class RpcTestImpl implements RpcTest {
 
 	@Override
 	public String testMethod(String str) {
-		return "rpcTestImpl 收到收到";
+		return "rpcTestImpl 收到收到：" + str;
 	}
 }

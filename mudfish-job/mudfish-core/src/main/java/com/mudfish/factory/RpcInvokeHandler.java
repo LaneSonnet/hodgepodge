@@ -6,8 +6,11 @@ import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
+import com.mudfish.common.constants.RpcServerConstant;
 import com.mudfish.constants.MessageType;
+import com.mudfish.exception.MudfishRpcException;
 import com.mudfish.netty.client.NettyClient;
 import com.mudfish.netty.client.RpcClientManager;
 import com.mudfish.struct.MudfishMessage;
@@ -23,7 +26,6 @@ public class RpcInvokeHandler implements InvocationHandler {
 	private static final Logger logger = LoggerFactory.getLogger(RpcInvokeHandler.class);
 
 	private RpcClientManager clientManager;
-	private static final long GET_RSPONSE_TIME_OUT = 300000;
 
 	public RpcInvokeHandler(RpcClientManager clientManager) {
 		this.clientManager = clientManager;
@@ -43,7 +45,10 @@ public class RpcInvokeHandler implements InvocationHandler {
 
 		RpcFutureResponse response = new RpcFutureResponse(request, RpcResponseFactory.getInstance());
 		clientManager.getClient().send(requestMessage);
-		MudfishRpcResponse result = response.get(GET_RSPONSE_TIME_OUT);
-		return result;
+		MudfishRpcResponse result = response.get(RpcServerConstant.CLIENT_RESPONSE_TIME_OUT);
+		if (!StringUtils.isEmpty(result.getErrorMsg())) {
+			throw new MudfishRpcException(result.getErrorMsg());
+		}
+		return result.getResult();
 	}
 }

@@ -28,7 +28,7 @@ public class RpcBeanRegister implements InitializingBean{
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		RpcBeanFactory rpcBeanFactory = new com.mudfish.factory.RpcBeanFactory(clientManager);
+		RpcBeanFactory rpcBeanFactory = new RpcBeanFactory(clientManager);
 		Map<String, Object> rpcProxyBeans = rpcBeanFactory.getRpcProxyBeans();
 		for (Entry<String, Object> beans : rpcProxyBeans.entrySet()) {
 			beanFactory.registerSingleton(beans.getKey(), beans.getValue());

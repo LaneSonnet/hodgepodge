@@ -28,6 +28,7 @@ import com.mudfish.test.myprotocol.codec.NettyMessageDecoder;
 import com.mudfish.test.myprotocol.codec.NettyMessageEncoder;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -46,8 +47,8 @@ public class NettyClient {
 
 	private static final Log LOG = LogFactory.getLog(NettyClient.class);
 
-	private ScheduledExecutorService executor = Executors
-			.newScheduledThreadPool(1);
+		private ScheduledExecutorService executor = Executors
+				.newScheduledThreadPool(1);
 
 	EventLoopGroup group = new NioEventLoopGroup();
 
@@ -83,7 +84,7 @@ public class NettyClient {
 			System.out.println("=======================================================fdsafasf");
 			// 当对应的channel关闭的时候，就会返回对应的channel。
 			// Returns the ChannelFuture which will be notified when this channel is closed. This method always returns the same future instance.
-			future.channel().closeFuture().sync();
+			Channel channel = future.channel().closeFuture().sync().channel();
 		} finally {
 			// 所有资源释放完成之后，清空资源，再次发起重连操作
 			executor.execute(new Runnable() {

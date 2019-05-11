@@ -1,30 +1,45 @@
 package com.mudfish.netty.client;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.mudfish.common.constants.RpcServerConstant;
+import com.mudfish.common.util.NetUtil;
+import com.mudfish.dao.rpc.RpcServerDao;
+import com.mudfish.exception.MudfishRpcException;
+import com.mudfish.po.rpc.RpcServer;
+import com.mudfish.thread.WorkerMoniterThread;
 
 /**
  * Created by Mudfish on 2019/2/23 0023.
  */
 public class RpcClientManager {
 
+	private static final Logger logger = LoggerFactory.getLogger(RpcClientManager.class);
 	private CopyOnWriteArrayList<NettyClient> connects = new CopyOnWriteArrayList();
 	private volatile int clientIndex = 0;
-	private List<String> serverParams;
+	@Resource
+	private RpcServerDao rpcServerDao;
 
-	public RpcClientManager(List<String> serverParams) {
-		this.serverParams = serverParams;
+	public RpcClientManager() {
 	}
 
-	public CopyOnWriteArrayList<NettyClient> init() {
-		for (String serverParam : serverParams) {
-			String[] params = serverParam.split(":");
-			NettyClient client = new NettyClient(params[0], Integer.parseInt(params[1]));
+	public void init() {
+		List<RpcServer> rpcServers = getAliveRpcServer();
+		for (RpcServer rpcServer : rpcServers) {
+			NettyClient client = new NettyClient(rpcServer.getIp(), rpcServer.getRpcPort());
 			client.setId("" + System.currentTimeMillis() + client.hashCode());
 			client.start();
 			connects.add(client);
 		}
-		return connects;
+		WorkerMoniterThread workerMoniterThread = new WorkerMoniterThread(connects, rpcServerDao);
+		workerMoniterThread.start();
 	}
 
 	public void destroy() {
@@ -45,4 +60,22 @@ public class RpcClientManager {
 		NettyClient nettyClient = connects.get(nextIndex);
 		return nettyClient;
 	}
+
+	public List<RpcServer> getAliveRpcServer() {
+		List<RpcServer> rpcServers = rpcServerDao.queryByStatus(RpcServerConstant.STATUS_START);
+		Iterator<RpcServer> iterator = rpcServers.iterator();
+		while (iterator.hasNext()) {
+			RpcServer rpcServer = iterator.next();
+			boolean reachable = NetUtil
+					.isReachable(rpcServer.getIp(), rpcServer.getRpcPort(), RpcServerConstant.PORT_REACHABLE_TIME_OUT);
+			if (!reachable) {
+				iterator.remove();
+			}
+		}
+		if (rpcServers == null || rpcServers.isEmpty()) {
+			throw new MudfishRpcException("There has not available remote rpc server");
+		}
+		return rpcServers;
+	}
+
 }

@@ -1,10 +1,13 @@
 package com.mudfish.config;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import com.mudfish.dao.rpc.RpcServerDao;
 import com.mudfish.netty.server.RpcServerManager;
 
 /**
@@ -17,7 +20,7 @@ public class RpcConfig {
 	private int rpcPort;
 
 	@Bean(initMethod = "start", destroyMethod = "destroy")
-	public RpcServerManager xxlJobExecutor() {
+	public RpcServerManager rpcServerManager() {
 		RpcServerManager manager = new RpcServerManager();
 		manager.setRpcPort(rpcPort);
 		return manager;
