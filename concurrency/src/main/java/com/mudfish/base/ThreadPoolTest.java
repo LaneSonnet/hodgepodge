@@ -2,6 +2,8 @@ package com.mudfish.base;
 
 import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -38,6 +40,7 @@ public class ThreadPoolTest {
 		  */
 		ThreadPoolExecutor threadPool = new ThreadPoolExecutor(2, 5, 1, TimeUnit.SECONDS,
 				new ArrayBlockingQueue<Runnable>(2));
+//		threadPool.allowCoreThreadTimeOut(true);
 		 /*
 		  * 无界队列：maxPoolSize无效
 		  */
