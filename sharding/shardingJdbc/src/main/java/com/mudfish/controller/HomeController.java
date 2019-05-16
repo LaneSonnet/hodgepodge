@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mudfish.vo.FundVo;
@@ -26,14 +27,14 @@ public class HomeController {
 	@Resource
 	private HomeService homeService;
 
-	@RequestMapping("/fund/add")
+	@RequestMapping(value = "/fund/add", method = RequestMethod.POST)
 	public String addFund(@RequestBody FundVo fundVo) throws Exception {
 		logger.debug("请求入参【{}】", fundVo);
 		homeService.add(fundVo);
 		return "index";
 	}
 
-	@RequestMapping("/fund/queryByName")
+	@RequestMapping(value = "/fund/queryByName", method = RequestMethod.POST)
 	@ResponseBody
 	public List<FundVo> queryFundByName(@RequestBody FundVo fundVo) throws Exception {
 		logger.debug("请求入参【{}】", fundVo);
@@ -42,7 +43,7 @@ public class HomeController {
 		return funds;
 	}
 
-	@RequestMapping("/home")
+	@RequestMapping(value = "/home", method = RequestMethod.POST)
 	public String home(int id) throws Exception {
 		logger.debug("请求入参【{}】", id);
 		TestTable test = homeService.query(id);
@@ -50,21 +51,21 @@ public class HomeController {
 		return "index";
 	}
 
-	@RequestMapping("/user/add")
+	@RequestMapping(value = "/user/add", method = RequestMethod.POST)
 	public String addUser(@RequestBody UserVo userVo) throws Exception {
 		logger.debug("请求入参【{}】", userVo);
 		homeService.add(userVo);
 		return "index";
 	}
 
-	@RequestMapping("/order/add")
+	@RequestMapping(value = "/order/add", method = RequestMethod.POST)
 	public String addOrder(@RequestBody OrderVo orderVo) throws Exception {
 		logger.debug("请求入参【{}】", orderVo);
 		homeService.add(orderVo);
 		return "index";
 	}
 
-	@RequestMapping("/user/queryById")
+	@RequestMapping(value = "/user/queryById", method = RequestMethod.POST)
 	@ResponseBody
 	public UserVo queryById(@RequestBody UserVo userVo) throws Exception {
 		logger.debug("请求入参【{}】", userVo);
@@ -73,7 +74,7 @@ public class HomeController {
 		return user;
 	}
 
-	@RequestMapping("/user/queryByName")
+	@RequestMapping(value = "/user/queryByName", method = RequestMethod.POST)
 	@ResponseBody
 	public List<UserVo> queryByName(@RequestBody UserVo userVo) throws Exception {
 		logger.debug("请求入参【{}】", userVo);

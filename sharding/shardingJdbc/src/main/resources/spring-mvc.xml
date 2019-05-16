@@ -41,5 +41,9 @@
 		<property name="prefix" value="/WEB-INF/"/>
 		<property name="suffix" value=".jsp"/>
 	</bean>
+	<!--  swagger¾²Ì¬ÎÄ¼þÂ·¾¶ -->
+<!--	<mvc:resources mapping="/swagger/**" location="/WEB-INF/swagger/" cache-period="31556926"/>
+	<mvc:default-servlet-handler />-->
+	<bean class="com.mudfish.config.SwaggerConfiguration" />
 
 </beans>
