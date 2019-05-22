@@ -17,3 +17,6 @@ spring:
 #ms-user:
 #  ribbon:
 #    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+#logging:
+#  level:
+#    com.jiangwg.feign.UserClient: DEBUG
