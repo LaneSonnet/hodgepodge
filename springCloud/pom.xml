@@ -13,6 +13,8 @@
 		<module>ms-movie</module>
 		<module>ms-eureka</module>
 		<module>ms-movie-ribbon</module>
+		<module>ms-movie-ribbon-hystrix</module>
+		<module>ms-movie-feign-hystrix</module>
 	</modules>
 	<packaging>pom</packaging>
 
