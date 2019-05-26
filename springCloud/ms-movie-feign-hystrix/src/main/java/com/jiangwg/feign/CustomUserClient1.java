@@ -15,7 +15,8 @@ import feign.RequestLine;
 /**
  * Created by Mudfish on 2019/1/13 0013.
  */
-@FeignClient(value = "ms-user", configuration = Configuration1.class)
+//@FeignClient(value = "ms-user", configuration = Configuration1.class, fallback = HystrixFeignClient.class)
+@FeignClient(value = "ms-user", configuration = Configuration1.class, fallbackFactory = HystrixFeignFactory.class)
 public interface CustomUserClient1 {
 
 	@RequestLine("GET /simple/{id}")

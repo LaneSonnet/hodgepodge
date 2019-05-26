@@ -15,6 +15,7 @@
 		<module>ms-movie-ribbon</module>
 		<module>ms-movie-ribbon-hystrix</module>
 		<module>ms-movie-feign-hystrix</module>
+		<module>ms-hystrix-dashboard</module>
 	</modules>
 	<packaging>pom</packaging>
 

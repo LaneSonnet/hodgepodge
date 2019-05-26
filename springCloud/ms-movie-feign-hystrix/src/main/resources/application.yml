@@ -13,7 +13,7 @@ eureka:
     lease-expiration-duration-in-seconds: 2
 spring:
   application:
-    name: ms-movie-feign
+    name: ms-movie-feign-hystrix
 #ms-user:
 #  ribbon:
 #    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
