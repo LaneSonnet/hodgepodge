@@ -1,0 +1,21 @@
+server:
+  port: 8031
+spring:
+  application:
+    name: ms-hystrix-turbine
+eureka:
+  client:
+    service-url:
+      defaultZone: http://user:12345678@localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+#turbine:
+#  aggregator:
+#    clusterConfig: MS-MOVIE-FEIGN-HYSTRIX
+#  appConfig: ms-movie-feign-hystrix
+#  clusterNameExpression: "'default'"
+turbine:
+  aggregator:
+    clusterConfig: default
+  appConfig: ms-movie-feign-hystrix,ms-movie-ribbon-hystrix
+  clusterNameExpression: "'default'"
