@@ -17,6 +17,7 @@
 		<module>ms-movie-feign-hystrix</module>
 		<module>ms-hystrix-dashboard</module>
 		<module>ms-hystrix-turbine</module>
+		<module>ms-zuul</module>
 	</modules>
 	<packaging>pom</packaging>
 
