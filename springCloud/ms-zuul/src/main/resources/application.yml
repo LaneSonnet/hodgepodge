@@ -9,3 +9,43 @@ eureka:
       defaultZone: http://user:12345678@localhost:8761/eureka
   instance:
     prefer-ip-address: true
+# 0、为微服务指定别名
+#zuul:
+#  routes:
+#    ms-user: /user/**
+# zuul默认代理所有注册到eureka上的微服务；
+# 1、忽略所有，打开指定
+#zuul:
+#  ignoredServices: '*'
+#  routes:
+#    ms-movie-feign-hystrix: /movie/**
+#    ms-user: /user/**
+# 2、打开所有，忽略指定
+#zuul:
+#  ignoredServices: ms-movie-feign-hystrix
+#  routes:
+#    ms-user: /user/**
+# 3、更细粒度，需指定路径和serviceId
+#zuul:
+#  routes:
+#    uniqueServiceName:
+#      path: /USER/**
+#      serviceId: ms-user
+# 4、serviceId也可以替换为服务url：此时hystrix和ribbon都不会起作用
+#zuul:
+#  routes:
+#    uniqueServiceName:
+#      path: /userUrl/**
+#      url: http://192.168.1.3:7902/
+# 5、如果要用物理url还要用hystrix和ribbon功能：
+zuul:
+  routes:
+    uniqueServiceName:
+      path: /specialUser/**
+      serviceId: ms-user2
+ribbon:
+  eureka:
+    enabled: false
+ms-user2:
+  ribbon:
+    listOfServers: http://192.168.1.3:7902
