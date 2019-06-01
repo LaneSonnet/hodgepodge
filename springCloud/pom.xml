@@ -18,6 +18,8 @@
 		<module>ms-hystrix-dashboard</module>
 		<module>ms-hystrix-turbine</module>
 		<module>ms-zuul</module>
+		<module>ms-springConfig-server</module>
+		<module>ms-springConfig-client</module>
 	</modules>
 	<packaging>pom</packaging>
 
